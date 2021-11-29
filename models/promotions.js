@@ -58,6 +58,6 @@ const promoSchema = new Schema({
     timestamps: true
 });
 
-var promotions = mongoose.model('Promotion', dishSchema);
+var Promotions = mongoose.model('Promotions', promoSchema);
 
 module.exports = Promotions;
