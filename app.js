@@ -19,8 +19,8 @@ const mongoose = require('mongoose');
 
 const Dishes = require('./models/dishes');
 
-/*const url = config.mongoUrl;
-const connect = mongoose.connect(url, {
+const url = config.mongoUrl;
+/*const connect = mongoose.connect(url, {
   useMongoClient: true
 });*/
 mongoose.connect('mongodb://localhost:3000/conFusionServer');
@@ -34,6 +34,15 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
+app.all('*', (req, res, next) => {
+  if (req.secure) {
+    return next();
+  }
+  else {
+    res.redirect(307, 'https://' + req.hostname + ':' + app.get('secPort') + req.url);
+  }
+});
 
 // uncomment after placing yourfavicon in /public
 // app.use(favicon(path.join(_dirname, 'public', 'favicon.icon')));
